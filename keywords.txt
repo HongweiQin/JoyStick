@@ -1,0 +1,5 @@
+JoyStick	KEYWORD1
+getXPos	KEYWORD2
+getYPos	KEYWORD2
+getBtnPos	KEYWORD2
+getPosition	KEYWORD2
