@@ -28,7 +28,12 @@ These are what make this driver meaningful.
 * Able to trigger interrupts\(ToBeDone\)
 
 ## Connetcions
+
 ToBeDone
+
+## Examples
+
+* serialPrintStatus.ino // This example may help you to use basic functions of this driver.
 
 
 
