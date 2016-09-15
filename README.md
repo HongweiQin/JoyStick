@@ -22,6 +22,8 @@ Usually, the sellers in _Taobao_ will give you some documents about this JoyStic
 
 These are what make this driver meaningful.
 
+Enjoy :D
+
 ## Goals of this driver
 * Easy to use
 * Able to capture button operations
@@ -29,11 +31,34 @@ These are what make this driver meaningful.
 
 ## Connetcions
 
-ToBeDone
+### Direction
+Usually, there is no sign on the joystick to indicate which the "right" position is.
+
+Just line it up and use the *serialPrintStatus.ino* example to give it a try.
+
+**ToBeDone**
+
+## Some tips about INTR
+Interrupt enables you to write your own Interrupt Service Routine \(ISR\) to respond to certain events. 
+Correctly using interrupts can make your code more efficient.
+
+If you decide to use INTR, you need to connect your sw with one pin that can trigger interrupts.
+\(Usually pin 2 or 3, see [https://www.arduino.cc/en/Reference/AttachInterrupt](https://www.arduino.cc/en/Reference/AttachInterrupt)\)
+
+Here are some tips about interrupts and ISR:
+
+* Keep it short
+* Don't use delay ()
+* Don't do serial prints
+* Make variables shared with the main code volatile
+* Variables shared with main code may need to be protected by "critical sections" (see below)
+* Don't try to turn interrupts off or on
+
+For more information, you can visit [Arduino.cc](https://www.arduino.cc/en/Reference/AttachInterrupt) or [Nick Gammon's notes](http://gammon.com.au/interrupts).
 
 ## Examples
 
-* serialPrintStatus.ino // This example may help you to use basic functions of this driver.
+* serialPrintStatus // This example may help you to use basic functions of this driver. Moreover, it helps you to determine your JoyStick's position.
 
 
 

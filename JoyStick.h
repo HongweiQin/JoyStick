@@ -7,14 +7,12 @@
 #define JOYSTICK_H
 
 #include "Arduino.h"
+#include "Config.h"
 
-/*
-**The getPosition() method allows users to get all of the position information using only one function call.
-**Good side: If you usually want to get all dimensions of the stick's position information at the same time, it can save your execution time.
-**Bad side: It consumes more space, since we have to use some variebles to hold the position information. As you know, space matters in SOC systems.
-**uncomment to use it.
-*/
-//#define GETPOS
+#define JSPRESS FALLING
+#define JSRELEASE RISING
+#define JSCHANGE CHANGE
+
 
 #define JoyStickBtnPressed 0
 #define JoyStickBtnReleased 1
@@ -31,10 +29,9 @@
 #define JoyStickRightThrottle 100
 
 
-class JoyStick 
-{
+class JoyStick {
 public:
-#ifdef GETPOS
+#ifdef JOYSTICK_GETPOS
 	int xPos;
 	int yPos;
 	int buttonPos;
@@ -44,14 +41,15 @@ public:
 	int getXPos();
 	int getYPos();
 	int getBtnPos();
-#ifdef GETPOS
+#ifdef JOYSTICK_GETPOS
 	void getPosition();
 #endif
 	void reverseX();
 	void reverseY();
-	void registerReleaseBtnIntr(void (*BtnIsr)());
-	void registerPressBtnIntr(void (*BtnIsr)());
+#ifdef JOYSTICK_INTR
+	void registerBtnIntr(int op,void (*JoyStickISR)());
 	void detachBtnIntr();
+#endif
 	
 private:
 	int _VRxPin;

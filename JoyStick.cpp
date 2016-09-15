@@ -14,11 +14,10 @@
 /*
 rxPin: the pin VRx connects to (analogRead pin)
 ryPin: the pin VRy connects to (analogRead pin)
-buttonPin: the pin SW connnects to
+buttonPin: the pin SW connnects to (pass zero if you don't use it!)
 */
-JoyStick::JoyStick(int rxPin, int ryPin, int buttonPin)
-{
-	#ifdef GETPOS
+JoyStick::JoyStick(int rxPin, int ryPin, int buttonPin){
+	#ifdef JOYSTICK_GETPOS
 	xPos = 0;
 	yPos = 0;
 	buttonPos = 0;
@@ -28,8 +27,10 @@ JoyStick::JoyStick(int rxPin, int ryPin, int buttonPin)
 	_SwButtonPin = buttonPin;
 	_xReverse = 0;
 	_yReverse = 0;
-	pinMode(buttonPin,INPUT);
-	digitalWrite(buttonPin,HIGH);//The buttonPin has to be pulled up in the initialization process, or it may not work!
+	if(buttonPin){
+		pinMode(buttonPin,INPUT);
+		digitalWrite(buttonPin,HIGH);//The buttonPin has to be pulled up in the initialization process, or it may not work!
+	}
 }
 
 /*
@@ -45,9 +46,8 @@ yReverse:
    0: do not reverse
    1: reverse
 */
-JoyStick::JoyStick(int rxPin, int ryPin, int buttonPin, int xReverse, int yReverse)
-{
-	#ifdef GETPOS
+JoyStick::JoyStick(int rxPin, int ryPin, int buttonPin, int xReverse, int yReverse){
+	#ifdef JOYSTICK_GETPOS
 	xPos = 0;
 	yPos = 0;
 	buttonPos = 0;
@@ -57,8 +57,10 @@ JoyStick::JoyStick(int rxPin, int ryPin, int buttonPin, int xReverse, int yRever
 	_SwButtonPin = buttonPin;
 	_xReverse = xReverse;
 	_yReverse = yReverse;
-	pinMode(buttonPin,INPUT);
-	digitalWrite(buttonPin,HIGH);//The buttonPin has to be pulled up in the initialization process, or it may not work!
+	if(buttonPin){
+		pinMode(buttonPin,INPUT);
+		digitalWrite(buttonPin,HIGH);//The buttonPin has to be pulled up in the initialization process, or it may not work!
+	}
 }
 
 /*
@@ -67,8 +69,7 @@ Returns:
   JoyStickRight
   JoyStickMid
 */
-int JoyStick::getXPos()
-{
+int JoyStick::getXPos(){
 	int x= analogRead(_VRxPin);
 	return (((__isLeft(x) ^ _xReverse)&(!(__isRight(x) ^ _xReverse))) << 1) | ((__isRight(x) ^ _xReverse)&(!(__isLeft(x) ^ _xReverse)));
 }
@@ -79,21 +80,18 @@ int JoyStick::getXPos()
   JoyStickDown
   JoyStickMid
 */
-int JoyStick::getYPos()
-{
+int JoyStick::getYPos(){
 	int y= analogRead(_VRyPin);
 	return (((__isUp(y) ^ _yReverse)&(!(__isDown(y) ^ _yReverse))) << 1) | ((__isDown(y) ^ _yReverse)&(!(__isUp(y) ^ _yReverse)));
 }
 
 
-int JoyStick::getBtnPos()
-{
+int JoyStick::getBtnPos(){
 	return digitalRead(_SwButtonPin);
 }
 
-#ifdef GETPOS
-void JoyStick::getPosition()
-{
+#ifdef JOYSTICK_GETPOS
+void JoyStick::getPosition(){
 	int pressed= digitalRead(_SwButtonPin); //this variable determines whether joystick has been pressed down
 	int x= analogRead(_VRxPin);//this variable holds the X-coordinate value
 	int y= analogRead(_VRyPin); //this variable holds the Y-coordinate value
@@ -108,31 +106,36 @@ void JoyStick::getPosition()
 /*
 Reverse X dimension
 */
-void JoyStick::reverseX()
-{
+void JoyStick::reverseX(){
 	_xReverse ^= 1;
 }
 
 /*
 Reverse Y dimension
 */
-void JoyStick::reverseY()
-{
+void JoyStick::reverseY(){
 	_yReverse ^= 1;
 }
 
-void JoyStick::registerReleaseBtnIntr(void (*BtnIsr)())
-{
-	attachInterrupt(digitalPinToInterrupt(_SwButtonPin), BtnIsr, RISING);
+#ifdef JOYSTICK_INTR
+/*
+** registerBtnIntr(), register an ISR for button operations
+** parameters:
+** @ op: What kind of action you want to respond to. Choose one among:
+** 		JSPRESS: the press action.
+** 		JSRELEASE: the release action.
+** 		JSCHANGE: the button status changed. 
+** @ JoyStickISR: Your ISR.
+*/
+void JoyStick::registerBtnIntr(int op,void (*JoyStickISR)()){
+	attachInterrupt(digitalPinToInterrupt(_SwButtonPin), JoyStickISR, op);
 }
 
-void JoyStick::registerPressBtnIntr(void (*BtnIsr)())
-{
-	attachInterrupt(digitalPinToInterrupt(_SwButtonPin), BtnIsr, FALLING);
-}
-void JoyStick::detachBtnIntr()
-{
+/*
+** detachBtnIntr(), unregister button operation ISR
+*/
+void JoyStick::detachBtnIntr(){
 	detachInterrupt(digitalPinToInterrupt(_SwButtonPin));
 }
-
+#endif
 

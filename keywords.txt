@@ -3,3 +3,6 @@ getXPos	KEYWORD2
 getYPos	KEYWORD2
 getBtnPos	KEYWORD2
 getPosition	KEYWORD2
+reverseX KEYWORD2
+reverseY KEYWORD2
+registerBtnIntr KEYWORD2
