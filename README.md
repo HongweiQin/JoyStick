@@ -41,7 +41,7 @@ GND|GND
 +5V|5V
 VRx|AnalogInputPin
 VRy|AnalogInputPin
-SW|SeeBlow
+SW|SeeBelow
 
 ### SW pin connection
 If you want to use the INTR way to respond to button events, you need to connect your SW to an *External Interrupts pin*.\(See [About INTR](#About-INTR)\)
@@ -84,7 +84,7 @@ Uncomment/comment *SWfilter* in *Config.h* to use/unuse the software filter.
 
 The software filter avoids the user ISR being called within a *certain time* since the last calling. 
 
-The *certain time* can be defined by *SWFILTERTHRESHOLD* in *Config.h*\(The default value is 500 miliseconds\).
+The *certain time* can be defined by *SWFILTERTHRESHOLD* in *Config.h*\(The default value is 500 milliseconds\).
 
 ## Examples
 
