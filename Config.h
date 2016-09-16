@@ -15,3 +15,5 @@
 //enable the INTR usage
 #define JOYSTICK_INTR
 
+//software filter for btn INTR
+#define SWfilter

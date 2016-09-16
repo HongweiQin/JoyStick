@@ -51,7 +51,7 @@ Here are some tips about interrupts and ISR:
 * Don't use delay ()
 * Don't do serial prints
 * Make variables shared with the main code volatile
-* Variables shared with main code may need to be protected by "critical sections" (see below)
+* Variables shared with main code may need to be protected by "critical sections"
 * Don't try to turn interrupts off or on
 
 For more information, you can visit [Arduino.cc](https://www.arduino.cc/en/Reference/AttachInterrupt) or [Nick Gammon's notes](http://gammon.com.au/interrupts).

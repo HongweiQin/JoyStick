@@ -127,8 +127,23 @@ void JoyStick::reverseY(){
 ** 		JSCHANGE: the button status changed. 
 ** @ JoyStickISR: Your ISR.
 */
+
+static void btnISR(){
+#ifdef SWfilter
+	static uint32_t lastINTtime = 0;
+	uint32_t INTtime;
+	INTtime = micros();
+	if(INTtime - lastINTtime < SWFILTERTHRESHOLD) return; 
+	lastINTtime = INTtime;
+#endif
+	__btnUsrISR();
+}
+
+
+
 void JoyStick::registerBtnIntr(int op,void (*JoyStickISR)()){
-	attachInterrupt(digitalPinToInterrupt(_SwButtonPin), JoyStickISR, op);
+	__btnUsrISR = JoyStickISR;
+	attachInterrupt(digitalPinToInterrupt(_SwButtonPin), btnISR, op);
 }
 
 /*
@@ -136,6 +151,7 @@ void JoyStick::registerBtnIntr(int op,void (*JoyStickISR)()){
 */
 void JoyStick::detachBtnIntr(){
 	detachInterrupt(digitalPinToInterrupt(_SwButtonPin));
+	__btnUsrISR = NULL;
 }
 #endif
 

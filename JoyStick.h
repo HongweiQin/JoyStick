@@ -29,6 +29,15 @@
 #define JoyStickRightThrottle 100
 
 
+
+#ifdef JOYSTICK_INTR
+#ifdef SWfilter
+#define SWFILTERTHRESHOLD 500000
+#endif
+static void (*__btnUsrISR)();//user btnISR handler
+static void btnISR();
+#endif
+
 class JoyStick {
 public:
 #ifdef JOYSTICK_GETPOS
