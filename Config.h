@@ -17,3 +17,7 @@
 
 //software filter for btn INTR
 #define SWfilter
+#ifdef SWfilter
+#define SWFILTERTHRESHOLD 500000
+#endif
+

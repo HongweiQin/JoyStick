@@ -38,7 +38,7 @@ Just line it up and use the *serialPrintStatus.ino* example to give it a try.
 
 **ToBeDone**
 
-## Some tips about INTR
+## About INTR
 Interrupt enables you to write your own Interrupt Service Routine \(ISR\) to respond to certain events. 
 Correctly using interrupts can make your code more efficient.
 
@@ -56,9 +56,24 @@ Here are some tips about interrupts and ISR:
 
 For more information, you can visit [Arduino.cc](https://www.arduino.cc/en/Reference/AttachInterrupt) or [Nick Gammon's notes](http://gammon.com.au/interrupts).
 
+### INTR Software filter
+
+My tests shows that there are some glitches in SWpin. These glitches may cause unexpected INTR triggers.
+
+Basically, we have two ways to address this issue:
+
++ We can parallel a capacitor to mitigate this issue.
++ We can use a software filter.
+
+Uncomment/comment *SWfilter* in *Config.h* to use/unuse the software filter.
+
+The software filter avoids the user ISR being called within a *certain time* since the last calling. 
+
+The *certain time* can be defined by *SWFILTERTHRESHOLD* in *Config.h*\(The default value is 500 miliseconds\).
+
 ## Examples
 
 * serialPrintStatus // This example may help you to use basic functions of this driver. Moreover, it helps you to determine your JoyStick's position.
-
+* btnINTR //Use INTR to capture btn operations
 
 
