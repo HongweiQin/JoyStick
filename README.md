@@ -38,13 +38,9 @@ Enjoy :D
 JoyStick | Arduino 
 ---|---
 GND|GND
----|---
 +5V|5V
----|---
 VRx|AnalogInputPin
----|---
 VRy|AnalogInputPin
----|---
 SW|SeeBlow
 
 ### SW pin connection
