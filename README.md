@@ -6,6 +6,10 @@ This is an Arduino library for the use of the 5-pin JoyStick.
 
 This kind of JoyStick is commonly available on [Taobao](http://www.taobao.com "http://www.taobao.com")
 
+A tipical one looks like this:
+
+![](https://github.com/HongweiQin/JoyStick/raw/master/JoyStick.png)
+
 It contains 5 pins \(GND,+5V,VRx,VRy,SW\) to connect with your arduino board.
 
 It contains two potentiometers that allow us to messure the movement of the stick in 2-D. 
@@ -31,12 +35,27 @@ Enjoy :D
 
 ## Connetcions
 
+JoyStick | Arduino 
+---|---
+GND|GND
+---|---
++5V|5V
+---|---
+VRx|AnalogInputPin
+---|---
+VRy|AnalogInputPin
+---|---
+SW|SeeBlow
+
+### SW pin connection
+If you want to use the INTR way to respond to button events, you need to connect your SW to an *External Interrupts pin*.\(See [About INTR](#About-INTR)\)
+
+Otherwise, just connect to any *Digital IO Pin* or *Analog Input Pin* as you like.
+
 ### Direction
-Usually, there is no sign on the joystick to indicate which the "right" position is.
+Usually, there is no sign on the joystick to indicate which the "right" direction is.
 
 Just line it up and use the *serialPrintStatus.ino* example to give it a try.
-
-**ToBeDone**
 
 ## About INTR
 Interrupt enables you to write your own Interrupt Service Routine \(ISR\) to respond to certain events. 

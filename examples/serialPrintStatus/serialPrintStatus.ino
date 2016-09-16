@@ -8,7 +8,7 @@
 #include <JoyStick.h>
 
 int pos;
-JoyStick myJoyStick(A0,A1,8);
+JoyStick myJoyStick(A0,A1,8);//VRx pin, VRy pin, SW pin
 
 void setup() {
   Serial.begin(9600);

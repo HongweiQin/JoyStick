@@ -1,4 +1,0 @@
-Add more informations in README.md(e.g. What kind of joyStick does it apply to)
-Add more examples
-Add INTR functions
-Code optimizations
